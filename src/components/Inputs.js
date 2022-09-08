@@ -4,7 +4,13 @@ import { UilSearch } from '@iconscout/react-unicons'
 import { UilLocationPoint } from '@iconscout/react-unicons'
 import { toast } from 'react-toastify';
 
+// i18Next Translations
+import '../js/translations/i18n'
+import {useTranslation} from 'react-i18next'
+
 function Inputs({ setQuery, units, setUnits   }) {
+
+  const { t } = useTranslation()
   
   const [city, setCity] = useState('')
 
@@ -16,9 +22,9 @@ function Inputs({ setQuery, units, setUnits   }) {
 
   const handleLocationClick = () => {
     if(navigator.geolocation) {
-      toast.info(`Fetching user's location`)
+      toast.info(`${t('fetching_user_location')}`)
       navigator.geolocation.getCurrentPosition((position) => {
-        toast.success(`Location fetched!`)
+        toast.success(`${t('location_fetched')}`)
         let lat = position.coords.latitude
         let lon = position.coords.longitude
 
@@ -48,7 +54,7 @@ function Inputs({ setQuery, units, setUnits   }) {
                 value={city}
                 onChange={(e) => setCity(e.currentTarget.value) }
                 type="text"
-                placeholder="Search for city..." 
+                placeholder={t('search_for_city')} 
                 className="text-xl font-light p-2 w-full shadow-xl capitalize focus:outline-none placeholder:lowercase">
 
             </input>

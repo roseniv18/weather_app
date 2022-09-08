@@ -6,12 +6,20 @@ import TimeAndLocation from './components/TimeAndLocation';
 import TemperatureAndDetails from './components/TemperatureAndDetails';
 import Forecast from './components/Forecast';
 import getFormattedWeatherData  from './js/weatherServices';
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// i18Next Translations
+import './js/translations/i18n'
+import {useTranslation} from 'react-i18next'
+
+
 function App() {
+
+  // Initialize translation function
+  const {t} = useTranslation()
 
   const [query, setQuery] = useState({q: 'sofia'})
   const [units, setUnits] = useState('metric')
@@ -19,21 +27,20 @@ function App() {
   
   useEffect(() => {
     const fetchWeather = async () => {
-      const message = query.q ? query.q : 'current location.'
+      const message = query.q ? query.q : `${ t('current_location') }`
 
-      toast.info('Fetching weather for ' + message)
+      toast.info(`${ t('fetching_weather') }` + message)
 
       await getFormattedWeatherData({...query, units}).then(data => {
 
-        toast.success(`Successfully fetched weather for ${data.name}`)
+        toast.success(`${ t('successfully_fetched') } ${data.name}`)
 
         setWeather(data)
       })
     }
-  
-    console.log(weather)
-  
+
     fetchWeather()
+    
   }, [query, units])
 
   const formatBackground = () => {
@@ -60,7 +67,7 @@ function App() {
                   sm:mt-0 
                   py-5 
                   lg:px-28
-                  sm:px-10
+                  sm:px-5
                   bg-gradient-to-br from-cyan-700 to-blue-700 
                   h-fit
                   shadow-xl
@@ -75,8 +82,8 @@ function App() {
       <div>
         <TimeAndLocation weather = {weather}/>
         <TemperatureAndDetails units = {units} setUnits = {setUnits} weather = {weather}/>
-        <Forecast title="Hourly Forecast" items={weather.hourly}/>
-        <Forecast title="Daily Forecast" items={weather.daily}/>
+        <Forecast title={t('hourly_forecast')} items={weather.hourly}/>
+        <Forecast title={t('daily_forecast')} items={weather.daily}/>
       </div>
     )}
 

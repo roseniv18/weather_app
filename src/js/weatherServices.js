@@ -1,7 +1,18 @@
 import { DateTime } from "luxon"
+import { useTranslation } from "react-i18next"
+
+// i18Next Translations
+import './translations/i18n'
 
 const API_KEY = '04c2347fc1f302171df091590dadd361'
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/'
+
+// const Translation = () => {
+//     const {t} = useTranslation()
+//     console.log({t})
+// }
+
+// Translation()
 
 const getWeatherData = (infoType, searchParams) => {
     const url = new URL(BASE_URL + infoType)
@@ -35,7 +46,7 @@ const formatForecastWeather = (data) => {
     daily = daily.slice(1, 6)  //We don't start at 0 because that's the current weather and we already have that.
                  .map(d => {
                     return {
-                        title: formatToLocalTime(d.dt, timezone, 'ccc'),
+                        title: (formatToLocalTime(d.dt, timezone, 'ccc')),
                         temp: d.temp.day,
                         icon: d.weather[0].icon
                     }
@@ -70,6 +81,7 @@ const formatToLocalTime = (secs, zone, format = "cccc, dd LLL yyyy' | Local Time
     DateTime.fromSeconds(secs).setZone(zone).toFormat(format)
 
 const iconUrlFromCode = (code) => `https://openweathermap.org/img/wn/${code}@2x.png`
+
 
 export default getFormattedWeatherData
 export {formatToLocalTime, iconUrlFromCode}

@@ -1,7 +1,17 @@
 import React from 'react'
 import { iconUrlFromCode } from '../js/weatherServices'
 
+// i18Next Translations
+import '../js/translations/i18n'
+import {useTranslation} from 'react-i18next'
+
 function Forecast({title, items}) {
+
+    const { t } = useTranslation()
+
+    // We will use this regex only for the daily forecast translation
+    const regex = /^[a-z]+$/i
+
   return (
     <div>
         <div className='flex items-center justify-start mt-6'>
@@ -12,7 +22,7 @@ function Forecast({title, items}) {
         <div className='flex flex-row items-center justify-between text-white'>
             {items.map(item => (
                 <div className='flex flex-col items-center justify-center'>
-                    <p className='font-light text-sm'>{item.title}</p>
+                    <p className='font-light text-sm'>{ regex.test(item.title) === true ? `${t(item.title.toLowerCase())}` : item.title }</p>
                     <img 
                         src={iconUrlFromCode(item.icon)}
                         className='w-12 my-1'
