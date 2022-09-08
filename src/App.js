@@ -1,11 +1,10 @@
-import './App.css';
-import UilReact from '@iconscout/react-unicons/icons/uil-react'
 import TopButtons from './components/TopButtons'
-import Inputs from './components/Inputs';
-import TimeAndLocation from './components/TimeAndLocation';
-import TemperatureAndDetails from './components/TemperatureAndDetails';
-import Forecast from './components/Forecast';
-import getFormattedWeatherData  from './js/weatherServices';
+import Inputs from './components/Inputs'
+import TimeAndLocation from './components/TimeAndLocation'
+import TemperatureAndDetails from './components/TemperatureAndDetails'
+import Forecast from './components/Forecast'
+import Footer from './components/Footer'
+import getFormattedWeatherData  from './js/weatherServices'
 import { useState, useEffect } from 'react'
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -59,37 +58,43 @@ function App() {
 
   return (
 
+    <div className='md:pt-2'>
+       <div 
+        className={`mx-auto 
+                    max-w-screen-md
+                    sm:mt-0 
+                    py-5 
+                    lg:px-28
+                    sm:px-5
+                    bg-gradient-to-br
+                    h-fit
+                    shadow-md
+                    shadow-gray-400
+                    lg:rounded-md
+                    ${formatBackground()}`}>
 
-    <div 
-      className={`mx-auto 
-                  max-w-screen-md
-                  md:mt-4
-                  sm:mt-0 
-                  py-5 
-                  lg:px-28
-                  sm:px-5
-                  bg-gradient-to-br from-cyan-700 to-blue-700 
-                  h-fit
-                  shadow-xl
-                  shadow-gray-400
-                  ${formatBackground()}`}>
 
+      <TopButtons setQuery={setQuery}/>
+      <Inputs setQuery={setQuery} units={units} setUnits={setUnits}/>
+      
+      {weather && (
+        <div>
+          <TimeAndLocation weather = {weather}/>
+          <TemperatureAndDetails units = {units} setUnits = {setUnits} weather = {weather}/>
+          <Forecast title={t('hourly_forecast')} items={weather.hourly}/>
+          <Forecast title={t('daily_forecast')} items={weather.daily}/>
+        </div>
+      )}
 
-    <TopButtons setQuery={setQuery}/>
-    <Inputs setQuery={setQuery} units={units} setUnits={setUnits}/>
-    
-    {weather && (
-      <div>
-        <TimeAndLocation weather = {weather}/>
-        <TemperatureAndDetails units = {units} setUnits = {setUnits} weather = {weather}/>
-        <Forecast title={t('hourly_forecast')} items={weather.hourly}/>
-        <Forecast title={t('daily_forecast')} items={weather.daily}/>
+      <ToastContainer autoClose={3000} theme='colored' newestOnTop={true}/>
+
+      
       </div>
-    )}
 
-    <ToastContainer autoClose={3000} theme='colored' newestOnTop={true}/>
-
+      <Footer />
     </div>
+
+   
   );
 }
 
