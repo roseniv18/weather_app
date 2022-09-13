@@ -15,7 +15,7 @@ function Forecast({title, items}) {
     const regex = /^[a-z]+$/i
 
   return (
-    <div className='relative'>
+    <div className='relative mb-10'>
         <div className='flex items-center justify-start mt-6'>
             <p className='text-white font-medium uppercase'>{title}</p>
         </div>
@@ -24,17 +24,18 @@ function Forecast({title, items}) {
 
         {/* Forecast Carousel */}
         <CarouselProvider
-        naturalSlideWidth={600}
-        naturalSlideHeight={450}
+        naturalSlideWidth={80}
+        naturalSlideHeight={80}
         totalSlides={items.length}
         visibleSlides={4}
         isPlaying={true}
         interval={8000}
+        className='lg:h-20'
         >
 
         <Slider className='text-white'>
         {items.map((item, index) => (
-            <Slide index={index} >
+            <Slide index={index} className='sm:h-60'>
                 <div className='flex flex-col items-center justify-center'>
                     <p className='font-light text-sm'>{ regex.test(item.title) === true ? `${t(item.title.toLowerCase())}` : item.title }</p>
                     <img 
