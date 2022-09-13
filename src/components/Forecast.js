@@ -1,5 +1,7 @@
 import React from 'react'
 import { iconUrlFromCode } from '../js/weatherServices'
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 // i18Next Translations
 import '../js/translations/i18n'
@@ -13,14 +15,26 @@ function Forecast({title, items}) {
     const regex = /^[a-z]+$/i
 
   return (
-    <div>
+    <div className='relative'>
         <div className='flex items-center justify-start mt-6'>
             <p className='text-white font-medium uppercase'>{title}</p>
         </div>
+
         <hr className='my-2'></hr>
 
-        <div className='flex flex-row items-center justify-between text-white'>
-            {items.map(item => (
+        {/* Forecast Carousel */}
+        <CarouselProvider
+        naturalSlideWidth={600}
+        naturalSlideHeight={450}
+        totalSlides={items.length}
+        visibleSlides={4}
+        isPlaying={true}
+        interval={8000}
+        >
+
+        <Slider className='text-white'>
+        {items.map((item, index) => (
+            <Slide index={index} >
                 <div className='flex flex-col items-center justify-center'>
                     <p className='font-light text-sm'>{ regex.test(item.title) === true ? `${t(item.title.toLowerCase())}` : item.title }</p>
                     <img 
@@ -29,10 +43,17 @@ function Forecast({title, items}) {
                         alt=""
                     />
                     <p className='font-medium '>{`${item.temp.toFixed()}°`}</p>
-                </div>    
+                </div>  
+            </Slide >  
             ))}
+            
+            </Slider>
+            <ButtonBack className='absolute top-1/2 text-white text-3xl'>&lt;</ButtonBack>
+            <ButtonNext className='absolute right-0 top-1/2 text-white text-3xl'>&gt;</ButtonNext>
+
+        </CarouselProvider>
+            
         </div>
-    </div>
   )
 }
 
