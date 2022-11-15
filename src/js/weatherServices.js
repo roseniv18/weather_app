@@ -1,25 +1,29 @@
 import { DateTime } from "luxon"
-import { useTranslation } from "react-i18next"
-
-// i18Next Translations
-import './translations/i18n'
 
 const API_KEY = '04c2347fc1f302171df091590dadd361'
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/'
 
-// const Translation = () => {
-//     const {t} = useTranslation()
-//     console.log({t})
-// }
-
-// Translation()
-
-const getWeatherData = (infoType, searchParams) => {
+const getWeatherData = async (infoType, searchParams) => {
     const url = new URL(BASE_URL + infoType)
     url.search = new URLSearchParams({...searchParams, appid:API_KEY})
 
-    return fetch(url)
-            .then((res) => res.json())
+    try {
+        const res = await fetch(url)
+
+        if(!res.ok) {
+            throw new Error('Something went wrong!')
+        }
+
+        const data = res.json()
+
+        return data
+
+    } 
+    
+    catch (error) {
+        console.log("ERROR FETCHING WEATHER DATA")
+    }
+    
 }
 
 const formatCurrentWeather = (data) => {
@@ -66,15 +70,26 @@ const formatForecastWeather = (data) => {
 }
 
 const getFormattedWeatherData = async (searchParams) => {
-    const formattedCurrentWeather = await getWeatherData('weather', searchParams).then(formatCurrentWeather)
+
+    const formattedCurrentWeather = await getWeatherData('weather', searchParams).then(formatCurrentWeather).catch(error => {
+        console.log(error)
+    })
 
     const {lat, lon} = formattedCurrentWeather
 
-    const formattedForecastWeather = await getWeatherData('onecall', {
-        lat, lon, exclude: 'current,minutely,alerts', units: searchParams.units 
-    }).then(formatForecastWeather)
+    try {
+        const formattedForecastWeather = await getWeatherData('onecall', {
+            lat, lon, exclude: 'current,minutely,alerts', 
+            units: searchParams.units
+        }).then(formatForecastWeather)
 
-    return {...formattedCurrentWeather, ...formattedForecastWeather}
+        return {...formattedCurrentWeather, ...formattedForecastWeather}
+    }
+
+    catch (error) {
+        console.log("ERROR FORMATTING WEATHER DATA")
+    }
+    
 }
 
 const formatToLocalTime = (secs, zone, format = "cccc, dd LLL yyyy' | Local Time: 'hh:mm a") =>

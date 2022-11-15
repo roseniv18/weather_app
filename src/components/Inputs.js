@@ -40,7 +40,6 @@ function Inputs({ setQuery, units, setUnits   }) {
 
   const handleUnitsChange = (e) => {
     const selectedUnit = e.currentTarget.name
-    console.log(e.currentTarget.name)
     if(units !== selectedUnit) {
       setUnits(selectedUnit)
     }

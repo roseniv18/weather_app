@@ -16,26 +16,34 @@ import {useTranslation} from 'react-i18next'
 
 
 function App() {
-
   // Initialize translation function
   const {t} = useTranslation()
 
   const [query, setQuery] = useState({q: 'sofia'})
   const [units, setUnits] = useState('metric')
   const [weather, setWeather] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   
   useEffect(() => {
     const fetchWeather = async () => {
+      setIsLoading(true)
       const message = query.q ? query.q : `${ t('current_location') }`
 
       toast.info(`${ t('fetching_weather') }` + message)
 
-      await getFormattedWeatherData({...query, units}).then(data => {
+      try {
+        await getFormattedWeatherData({...query, units}).then(data => {
 
-        toast.success(`${ t('successfully_fetched') } ${data.name}`)
+          toast.success(`${ t('successfully_fetched') } ${data.name}`)
+  
+          setWeather(data)
+          setIsLoading(false)
+        })
 
-        setWeather(data)
-      })
+      } catch (error) {
+        toast.error(`${error}`)
+      }
+      
     }
 
     fetchWeather()
@@ -76,6 +84,8 @@ function App() {
 
       <TopButtons setQuery={setQuery}/>
       <Inputs setQuery={setQuery} units={units} setUnits={setUnits}/>
+
+      {isLoading && <p>Loading...</p>}
       
       {weather && (
         <div>
