@@ -54,7 +54,7 @@ function Inputs({ setQuery, units, setUnits   }) {
                 onChange={(e) => setCity(e.currentTarget.value) }
                 type="text"
                 placeholder={t('search_for_city')} 
-                className="text-xl font-light p-2 w-full shadow-xl capitalize focus:outline-none placeholder:lowercase">
+                className="rounded-md text-xl font-light py-2 px-3 w-full shadow-xl capitalize focus:outline-none placeholder:lowercase">
 
             </input>
 

@@ -14,6 +14,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import './js/translations/i18n'
 import {useTranslation} from 'react-i18next'
 
+// Loading animation
+import { Oval } from 'react-loader-spinner'
+
 
 function App() {
   // Initialize translation function
@@ -64,6 +67,36 @@ function App() {
     return 'from-yellow-700 to-orange-700'
   }
 
+  let content
+
+  if(isLoading) {
+	content = (
+		<Oval
+			height={80}
+			width={80}
+			color="#facc15"
+			wrapperStyle={{justifyContent: 'center'}}
+			wrapperClass=""
+			visible={true}
+			ariaLabel='oval-loading'
+			secondaryColor="#0369a1"
+			strokeWidth={2}
+			strokeWidthSecondary={2}
+		/>
+  )
+  } else {
+	if(weather) {
+		content = (
+			<div>
+				<TimeAndLocation weather = {weather}/>
+				<TemperatureAndDetails units = {units} setUnits = {setUnits} weather = {weather}/>
+				<Forecast title={t('hourly_forecast')} items={weather.hourly}/>
+				<Forecast title={t('daily_forecast')} items={weather.daily}/>
+			</div>
+		)
+	}
+  }
+    
   return (
 
     <div className='md:pt-2'>
@@ -75,6 +108,7 @@ function App() {
                     lg:px-28
                     sm:px-5
                     bg-gradient-to-br
+					min-h-800
                     h-fit
                     shadow-md
                     shadow-gray-400
@@ -84,20 +118,10 @@ function App() {
 
       <TopButtons setQuery={setQuery}/>
       <Inputs setQuery={setQuery} units={units} setUnits={setUnits}/>
-
-      {isLoading && <p>Loading...</p>}
       
-      {weather && (
-        <div>
-          <TimeAndLocation weather = {weather}/>
-          <TemperatureAndDetails units = {units} setUnits = {setUnits} weather = {weather}/>
-          <Forecast title={t('hourly_forecast')} items={weather.hourly}/>
-          <Forecast title={t('daily_forecast')} items={weather.daily}/>
-        </div>
-      )}
+      { content }
 
       <ToastContainer autoClose={3000} theme='colored' newestOnTop={true}/>
-
       
       </div>
 
