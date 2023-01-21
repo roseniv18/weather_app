@@ -97,7 +97,7 @@ function App() {
                     max-w-screen-md
                     sm:mt-0 
                     py-5 
-                    lg:px-28
+                    lg:px-24
                     sm:px-5
                     bg-gradient-to-br
 					          min-h-800
