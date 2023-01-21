@@ -13,17 +13,14 @@ const getWeatherData = async (infoType, searchParams) => {
         if(!res.ok) {
             throw new Error('Something went wrong!')
         }
-
         const data = res.json()
-
         return data
-
     } 
     
     catch (error) {
-        console.log("ERROR FETCHING WEATHER DATA")
+        console.error("ERROR FETCHING WEATHER DATA")
+        return error
     }
-    
 }
 
 const formatCurrentWeather = (data) => {
@@ -47,7 +44,8 @@ const formatCurrentWeather = (data) => {
 
 const formatForecastWeather = (data) => {
     let {timezone, daily, hourly} = data
-    daily = daily.slice(1, 6)  //We don't start at 0 because that's the current weather and we already have that.
+    //We don't start at 0 because that's the current weather and we already have that.
+    daily = daily.slice(1, 6) 
                  .map(d => {
                     return {
                         title: (formatToLocalTime(d.dt, timezone, 'ccc')),
@@ -56,6 +54,7 @@ const formatForecastWeather = (data) => {
                     }
                  })
 
+    //This returns 24 hours of hourly forecast
     hourly = hourly.slice(1, 26) 
                  .map(h => {
                     return {
@@ -72,7 +71,7 @@ const formatForecastWeather = (data) => {
 const getFormattedWeatherData = async (searchParams) => {
 
     const formattedCurrentWeather = await getWeatherData('weather', searchParams).then(formatCurrentWeather).catch(error => {
-        console.log(error)
+        console.error(error)
     })
 
     const {lat, lon} = formattedCurrentWeather
@@ -87,7 +86,7 @@ const getFormattedWeatherData = async (searchParams) => {
     }
 
     catch (error) {
-        console.log("ERROR FORMATTING WEATHER DATA")
+        console.error("ERROR FORMATTING WEATHER DATA")
     }
     
 }

@@ -12,7 +12,7 @@ function Forecast({title, items}) {
     const { t } = useTranslation()
 
     // We will use this regex only for the daily forecast translation
-    const regex = /^[a-z]+$/i
+    const regex = /^[a-z]+$/i // Matches a character from 'a' to 'z'. Case insensitive.
 
   return (
     <div className='relative mb-10'>
