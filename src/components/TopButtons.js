@@ -52,7 +52,7 @@ function TopButtons({setQuery}) {
 
         </select>
       </div>
-      <img src={flagUrl} className="lg:w-10 sm:w-4 sm:block lg:block flag" />
+      <img src={flagUrl} className="lg:w-10 sm:w-8 sm:block lg:block flag" />
     </div>
   )
 }
