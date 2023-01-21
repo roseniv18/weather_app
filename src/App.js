@@ -78,16 +78,16 @@ function App() {
 		/>
   )
   } else {
-	if(weather) {
-		content = (
-			<div>
-				<TimeAndLocation weather = {weather}/>
-				<TemperatureAndDetails units = {units} setUnits = {setUnits} weather = {weather}/>
-				<Forecast title={t("hourly_forecast")} items={weather.hourly}/>
-				<Forecast title={t("daily_forecast")} items={weather.daily}/>
-			</div>
-		)
-	}
+    if(weather) {
+      content = (
+        <div>
+          <TimeAndLocation weather = {weather}/>
+          <TemperatureAndDetails units = {units} setUnits = {setUnits} weather = {weather}/>
+          <Forecast title={t("hourly_forecast")} items={weather.hourly}/>
+          <Forecast title={t("daily_forecast")} items={weather.daily}/>
+        </div>
+      )
+    }
   }
     
   return (
