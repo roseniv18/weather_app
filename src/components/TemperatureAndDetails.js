@@ -66,15 +66,15 @@ function TemperatureAndDetails({weather: {
 
         <div className="flex sm:flex-col md:flex-row items-center justify-center space-x-2 text-white text-sm py-3">
             <UilSun size={18}/>
-            <p className="font-light text-base">{ t("rise") }<span className="font-medium ml-1">{formatToLocalTime(sunrise, timezone, "hh:mm a")}</span></p>
+            <p className="font-light text-base sm:pb-3 md:pb-0">{ t("rise") }<span className="font-medium ml-1">{formatToLocalTime(sunrise, timezone, "hh:mm a")}</span></p>
             <p className="font-light sm:hidden md:block">|</p>
             
             <UilSunset size={18}/>
-            <p className="font-light text-base">{ t("set") }<span className="font-medium ml-1">{formatToLocalTime(sunset, timezone, "hh:mm a")}</span></p>
+            <p className="font-light text-base sm:pb-3 md:pb-0">{ t("set") }<span className="font-medium ml-1">{formatToLocalTime(sunset, timezone, "hh:mm a")}</span></p>
             <p className="font-light sm:hidden md:block">|</p>
 
             <UilTemperature size={18}/>
-            <p className="font-light text-base">{ t("high") }<span className="font-medium ml-1">{`${temp_max.toFixed()}°`}</span></p>
+            <p className="font-light text-base sm:pb-3 md:pb-0">{ t("high") }<span className="font-medium ml-1">{`${temp_max.toFixed()}°`}</span></p>
             <p className="font-light sm:hidden md:block">|</p>
 
             <UilTemperature size={18}/>
