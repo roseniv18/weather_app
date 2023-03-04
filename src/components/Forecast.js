@@ -24,13 +24,13 @@ function Forecast({title, items}) {
 
         {/* Forecast Carousel */}
         <CarouselProvider
-        naturalSlideWidth={80}
-        naturalSlideHeight={80}
-        totalSlides={items.length}
-        visibleSlides={4}
-        isPlaying={true}
-        interval={8000}
-        className='lg:h-20'
+            naturalSlideWidth={80}
+            naturalSlideHeight={80}
+            totalSlides={items.length}
+            visibleSlides={4}
+            isPlaying={true}
+            interval={8000}
+            className='lg:h-20'
         >
 
         <Slider className='text-white'>
