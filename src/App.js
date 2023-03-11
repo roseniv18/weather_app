@@ -26,23 +26,23 @@ function App() {
   const [units, setUnits] = useState("metric")
   const [weather, setWeather] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-  
-  useEffect(() => {
-    const fetchWeather = async () => {
-      setIsLoading(true)
-      const message = query.q ? query.q : `${ t("current_location") }`
-      toast.info(`${ t("fetching_weather") }` + message)
-      try {
-        await getFormattedWeatherData({...query, units}).then(data => {
-          toast.success(`${ t("successfully_fetched") } ${data.name}`)
-          setWeather(data)
-          setIsLoading(false)
-        })
-      } catch (error) {
-        toast.error(`${error}`)
-      }
-    }
 
+  const fetchWeather = async () => {
+    setIsLoading(true)
+    const message = query.q ? query.q : `${ t("current_location") }`
+    toast.info(`${ t("fetching_weather") }` + message)
+    try {
+      await getFormattedWeatherData({...query, units}).then(data => {
+        toast.success(`${ t("successfully_fetched") } ${data.name}`)
+        setWeather(data)
+        setIsLoading(false)
+      })
+    } catch (error) {
+      toast.error(`${error}`)
+    }
+  }
+  
+  useEffect(() => { 
     fetchWeather()
   }, [query, units])
 

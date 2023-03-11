@@ -23,5 +23,5 @@ export const cities = [
       id: 5,
       title: "Paris",
     }, 
-  
+
   ] 
