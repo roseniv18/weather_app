@@ -35,7 +35,7 @@ function Forecast({title, items}) {
 
         <Slider className='text-white'>
         {items.map((item, index) => (
-            <Slide index={index} className='sm:h-60'>
+            <Slide key={index} index={index} className='sm:h-60'>
                 <div className='flex flex-col items-center justify-center'>
                     <p className='font-light text-sm'>{ regex.test(item.title) === true ? `${t(item.title.toLowerCase())}` : item.title }</p>
                     <img 
