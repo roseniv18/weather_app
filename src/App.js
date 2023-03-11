@@ -27,6 +27,11 @@ function App() {
   const [weather, setWeather] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
+  const background = {
+    blue: "from-cyan-700 to-blue-700",
+    orange: "from-yellow-700 to-orange-700"
+  }
+
   const fetchWeather = async () => {
     setIsLoading(true)
     const message = query.q ? query.q : `${ t("current_location") }`
@@ -47,17 +52,17 @@ function App() {
   }, [query, units])
 
   const formatBackground = () => {
+    const {blue, orange} = background
     if(!weather) {
-      return "from-cyan-700 to-blue-700"
+      return blue
     }
 
     const threshold = units === "metric" ? 20 : 60
 
     if(weather.temp <= threshold) {
-      return "from-cyan-700 to-blue-700"
+      return blue
     }
-
-    return "from-yellow-700 to-orange-700"
+    return orange
   }
 
   let content
